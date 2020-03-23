@@ -34,4 +34,6 @@ Screen('BlendFunction', window, 'GL_SRC_ALPHA', 'GL_ONE_MINUS_SRC_ALPHA');
 
 %% Output file setup
 
+test = 1
+
 end
