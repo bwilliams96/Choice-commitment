@@ -26,7 +26,7 @@ white = WhiteIndex(screenNumber);
 black = BlackIndex(screenNumber);
 grey = white / 1.5;
 inc = white - grey;
-[window, windowRect] = PsychImaging('OpenWindow', screenNumber, grey, [0 0 200 200]);
+[window, windowRect] = PsychImaging('OpenWindow', screenNumber, grey, [0 0 400 400]);
 [screenXpixels, screenYpixels] = Screen('WindowSize', window);
 ifi = Screen('GetFlipInterval', window);
 [xCenter, yCenter] = RectCenter(windowRect);
@@ -34,6 +34,5 @@ Screen('BlendFunction', window, 'GL_SRC_ALPHA', 'GL_ONE_MINUS_SRC_ALPHA');
 
 %% Output file setup
 
-test = 1
 
 end
