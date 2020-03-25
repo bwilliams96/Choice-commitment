@@ -9,11 +9,16 @@ RandStream.setGlobalStream(RandStream('mt19937ar','seed',sum(100*clock)));
 
 %% Task parameters --------------------------------------------------------
 
+l1 = 50;
+l2 = 50;
+prob = [50,50,20];
+trueLength = 10;
+
 
 %% ------------------------------------------------------------------------
 
 %% Participant info input
-subjectID = input('Enter participant number: ', 's');
+%subjectID = input('Enter participant number: ', 's');
 
 %ListenChar(2); Commented out for testing
 %% Psychtoolbox setup
@@ -34,5 +39,11 @@ Screen('BlendFunction', window, 'GL_SRC_ALPHA', 'GL_ONE_MINUS_SRC_ALPHA');
 
 %% Output file setup
 
+%% Main
+
+lt = l1 + l2;
+
+[pre, post] = makeMatrix(l1,l2,prob,trueLength);
+order = stimShuffle(lt, length(prob));
 
 end
