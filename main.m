@@ -11,7 +11,7 @@ RandStream.setGlobalStream(RandStream('mt19937ar','seed',sum(100*clock)));
 
 l1 = 50;
 l2 = 50;
-prob = [50,50,20];
+prob = [50,50,50, 50];
 trueLength = 10;
 
 
@@ -37,15 +37,13 @@ ifi = Screen('GetFlipInterval', window);
 [xCenter, yCenter] = RectCenter(windowRect);
 Screen('BlendFunction', window, 'GL_SRC_ALPHA', 'GL_ONE_MINUS_SRC_ALPHA');
 
-%% Stimuli positions and shapes
-
 %Defining stimuli positions on screen
 stimpos{1} = [(screenXpixels./16) (screenYpixels./4) (3.*(screenXpixels./16)) (screenYpixels./(4./3))];
 stimpos{2} = [(screenXpixels./(16/5)) (screenYpixels./4) (screenXpixels./(16/7)) (screenYpixels./(4./3))];
 stimpos{3} = [(9.*(screenXpixels./16)) (screenYpixels./4) (11.*(screenXpixels./16)) (screenYpixels./(4./3))];
 stimpos{4} = [(13.*(screenXpixels./16)) (screenYpixels./4) (15.*(screenXpixels./16)) (screenYpixels./(4./3))];
 
-% Making shapes
+% Load stimuli
 triangle1 = imread('triangle.jpg');
 triangle = Screen('MakeTexture', window, triangle1);
 square1 = imread('square.jpg');
@@ -54,13 +52,6 @@ diamond1 = imread('diamond.jpg');
 diamond = Screen('MakeTexture', window, diamond1);
 circle1 = imread('circle.jpg');
 circle = Screen('MakeTexture', window, circle1);
-
-%Drawing shapes and flipping to screen
-Screen('DrawTexture', window, square, [], stimpos{1}, 0);
-Screen('DrawTexture', window, triangle, [], stimpos{2}, 0);
-Screen('DrawTexture', window, circle, [], stimpos{3}, 0);
-Screen('DrawTexture', window, diamond, [], stimpos{4}, 0);
-Screen('Flip', window);
 
 
 %% Output file setup
@@ -71,5 +62,14 @@ lt = l1 + l2;
 
 [pre, post] = makeMatrix(l1,l2,prob,trueLength);
 order = stimShuffle(lt, length(prob));
+
+trial = 1;
+
+%Drawing shapes and flipping to screen
+Screen('DrawTexture', window, square, [], stimpos{order(trial,1)}, 0);
+Screen('DrawTexture', window, triangle, [], stimpos{order(trial,2)}, 0);
+Screen('DrawTexture', window, circle, [], stimpos{order(trial,3)}, 0);
+Screen('DrawTexture', window, diamond, [], stimpos{order(trial,4)}, 0);
+Screen('Flip', window);
 
 end
