@@ -44,15 +44,21 @@ stimpos{3} = [(9.*(screenXpixels./16)) (screenYpixels./4) (11.*(screenXpixels./1
 stimpos{4} = [(13.*(screenXpixels./16)) (screenYpixels./4) (15.*(screenXpixels./16)) (screenYpixels./(4./3))];
 
 % Load stimuli
-triangle1 = imread('triangle.jpg');
-triangle = Screen('MakeTexture', window, triangle1);
-square1 = imread('square.jpg');
-square = Screen('MakeTexture', window, square1);
-diamond1 = imread('diamond.jpg');
-diamond = Screen('MakeTexture', window, diamond1);
-circle1 = imread('circle.jpg');
-circle = Screen('MakeTexture', window, circle1);
+[triangle, ~, alphat] = imread('triangle.png');
+triangle(:, :, 4) = alphat;
+triangle = Screen('MakeTexture', window, triangle);
 
+[square, ~, alphas] = imread('square.png');
+square(:, :, 4) = alphas;
+square = Screen('MakeTexture', window, square);
+
+[diamond, ~, alphad] = imread('diamond.png');
+diamond(:, :, 4) = alphad;
+diamond = Screen('MakeTexture', window, diamond);
+
+[circle, ~, alphac] = imread('circle.png');
+circle(:, :, 4) = alphac;
+circle = Screen('MakeTexture', window, circle);
 
 %% Output file setup
 
