@@ -9,12 +9,9 @@ RandStream.setGlobalStream(RandStream('mt19937ar','seed',sum(100*clock)));
 
 %% Task parameters --------------------------------------------------------
 
-cond1 = [70,50,50,30];
-cond2 = [50,50,70,30];
-cond3 = [30,50,50,70];
 l1 = 50;
 l2 = 50;
-prob = cond1;
+prob = [50,50,50, 50];
 trueLength = 10;
 
 
@@ -75,9 +72,8 @@ lt = l1 + l2;
 order = stimShuffle(lt, length(prob));
 
 trial = 1;
-
-while trial <= l1
-    % Drawing shapes and flip to screen
+while trial < l1
+% Drawing shapes and flip to screen
     Screen('DrawTexture', window, square, [], stimpos{order(trial,1)}, 0);
     Screen('DrawTexture', window, triangle, [], stimpos{order(trial,2)}, 0);
     Screen('DrawTexture', window, circle, [], stimpos{order(trial,3)}, 0);
@@ -85,8 +81,8 @@ while trial <= l1
     start = Screen('Flip', window);
 
 
-    % Wait for a response (max 2sec) then display only the chosen stimuli on
-    % screen
+% Wait for a response (max 2sec) then display only the chosen stimuli on
+% screen
 
     [responseTi, keyStateVec] = KbWait([], [], GetSecs()+2);
 
@@ -107,11 +103,8 @@ while trial <= l1
 
     Screen('Flip', window);
 
-    WaitSecs(2);
+    WaitSecs(2)
     
-    trial = trial + 1;
-    
-    
-end
-sca;
+    trial = trial + 1
+
 end
