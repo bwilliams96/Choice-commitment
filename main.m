@@ -7,6 +7,16 @@ close all;
 clearvars;
 RandStream.setGlobalStream(RandStream('mt19937ar','seed',sum(100*clock)));
 
+if ismac
+    addpath('./Functions');
+    addpath('./Stimuli');
+elseif ispc
+    addpath('.\Functions');
+    addpath('.\Stimuli');
+else
+    disp('Paths not added')
+end
+
 %% Task parameters --------------------------------------------------------
 
 cond1 = [70,50,50,30];
