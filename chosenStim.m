@@ -1,13 +1,13 @@
-function chosen = chosenStim(squPos, triPos, cirPos, diaPos, pos)
+function chosen = chosenStim(s1Pos, s2Pos, s3Pos, s4Pos, pos)
 %{
 
 Created by: Brendan Williams
 
 Function requires 5 inputs:
-squPos = The numerical position of the square
-triPos = The numerical position of the triangle
-cirPos = The numerical position of the circle
-diaPos = The numerical position of the diamond
+s1Pos = The numerical position of stimulus 1 (square)
+s2Pos = The numerical position of stimulus 2 (triangle)
+s3Pos = The numerical position of stimulus 3 (circle)
+s4Pos = The numerical position of stimulus 4 (diamond)
 pos = The position of response key pressed
 
 The function has 1 output:
@@ -15,13 +15,13 @@ chosen = The identity of the chosen stimuli
 
 %}
 
-if pos == squPos
-    chosen = 'squ';
-elseif pos == triPos
-    chosen = 'tri';
-elseif pos == cirPos
-    chosen = 'cir';
-elseif pos == diaPos
-    chosen = 'dia';
+if pos == s1Pos
+    chosen = 's1';
+elseif pos == s2Pos
+    chosen = 's2';
+elseif pos == s3Pos
+    chosen = 's3';
+elseif pos == s4Pos
+    chosen = 's4';
 end
     

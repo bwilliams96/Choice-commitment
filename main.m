@@ -49,21 +49,22 @@ stimpos{4} = [(13.*(screenXpixels./16)) (screenYpixels./4) (15.*(screenXpixels./
 activeKeys = KbName({'a','s','k','l'});
 
 % Load stimuli
-[triangle, ~, alphat] = imread('triangle.png');
-triangle(:, :, 4) = alphat;
-triangle = Screen('MakeTexture', window, triangle);
+[stim1, ~, alphas] = imread('square.png');
+stim1(:, :, 4) = alphas;
+stim1 = Screen('MakeTexture', window, stim1);
 
-[square, ~, alphas] = imread('square.png');
-square(:, :, 4) = alphas;
-square = Screen('MakeTexture', window, square);
+[stim2, ~, alphat] = imread('triangle.png');
+stim2(:, :, 4) = alphat;
+stim2 = Screen('MakeTexture', window, stim2);
 
-[diamond, ~, alphad] = imread('diamond.png');
-diamond(:, :, 4) = alphad;
-diamond = Screen('MakeTexture', window, diamond);
+[stim3, ~, alphac] = imread('circle.png');
+stim3(:, :, 4) = alphac;
+stim3 = Screen('MakeTexture', window, stim3);
 
-[circle, ~, alphac] = imread('circle.png');
-circle(:, :, 4) = alphac;
-circle = Screen('MakeTexture', window, circle);
+[stim4, ~, alphad] = imread('diamond.png');
+stim4(:, :, 4) = alphad;
+stim4 = Screen('MakeTexture', window, stim4);
+
 
 %% Output file setup
 
@@ -78,10 +79,10 @@ trial = 1;
 
 while trial <= l1
     % Drawing shapes and flip to screen
-    Screen('DrawTexture', window, square, [], stimpos{order(trial,1)}, 0);
-    Screen('DrawTexture', window, triangle, [], stimpos{order(trial,2)}, 0);
-    Screen('DrawTexture', window, circle, [], stimpos{order(trial,3)}, 0);
-    Screen('DrawTexture', window, diamond, [], stimpos{order(trial,4)}, 0);
+    Screen('DrawTexture', window, stim1, [], stimpos{order(trial,1)}, 0);
+    Screen('DrawTexture', window, stim2, [], stimpos{order(trial,2)}, 0);
+    Screen('DrawTexture', window, stim3, [], stimpos{order(trial,3)}, 0);
+    Screen('DrawTexture', window, stim4, [], stimpos{order(trial,4)}, 0);
     start = Screen('Flip', window);
 
 
@@ -95,14 +96,14 @@ while trial <= l1
 
     chosen = chosenStim(order(trial,1), order(trial,2), order(trial,3), order(trial,4), response);
 
-    if chosen == 'squ'
-        Screen('DrawTexture', window, square, [], stimpos{response}, 0);
-    elseif chosen == 'tri'
-        Screen('DrawTexture', window, triangle, [], stimpos{response}, 0);
-    elseif chosen == 'cir'
-        Screen('DrawTexture', window, circle, [], stimpos{response}, 0);
-    elseif chosen == 'dia'
-        Screen('DrawTexture', window, diamond, [], stimpos{response}, 0);
+    if chosen == 's1'
+        Screen('DrawTexture', window, stim1, [], stimpos{response}, 0);
+    elseif chosen == 's2'
+        Screen('DrawTexture', window, stim2, [], stimpos{response}, 0);
+    elseif chosen == 's3'
+        Screen('DrawTexture', window, stim3, [], stimpos{response}, 0);
+    elseif chosen == 's4'
+        Screen('DrawTexture', window, stim4, [], stimpos{response}, 0);
     end
 
     Screen('Flip', window);
