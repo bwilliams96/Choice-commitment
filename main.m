@@ -145,6 +145,8 @@ while trial <= l1
         else 
             dispMat(4, disp{right}) = dispMat(4, disp{right}) + 1;
         end
+    else
+        DrawFormattedText(window, 'No image chosen', 'center','center', [0 0 0]);
     end
 
     Screen('Flip', window);
