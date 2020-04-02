@@ -59,21 +59,21 @@ stimpos{4} = [(13.*(screenXpixels./16)) (screenYpixels./4) (15.*(screenXpixels./
 activeKeys = KbName({'a','s','k','l'});
 
 % Load stimuli
-[stim1, ~, alphas] = imread('square.png');
-stim1(:, :, 4) = alphas;
-stim1 = Screen('MakeTexture', window, stim1);
+[stim{1}, ~, alphas] = imread('square.png');
+stim{1}(:, :, 4) = alphas;
+stim{1} = Screen('MakeTexture', window, stim{1});
 
-[stim2, ~, alphat] = imread('triangle.png');
-stim2(:, :, 4) = alphat;
-stim2 = Screen('MakeTexture', window, stim2);
+[stim{2}, ~, alphat] = imread('triangle.png');
+stim{2}(:, :, 4) = alphat;
+stim{2} = Screen('MakeTexture', window, stim{2});
 
-[stim3, ~, alphac] = imread('circle.png');
-stim3(:, :, 4) = alphac;
-stim3 = Screen('MakeTexture', window, stim3);
+[stim{3}, ~, alphac] = imread('circle.png');
+stim{3}(:, :, 4) = alphac;
+stim{3} = Screen('MakeTexture', window, stim{3});
 
-[stim4, ~, alphad] = imread('diamond.png');
-stim4(:, :, 4) = alphad;
-stim4 = Screen('MakeTexture', window, stim4);
+[stim{4}, ~, alphad] = imread('diamond.png');
+stim{4}(:, :, 4) = alphad;
+stim{4} = Screen('MakeTexture', window, stim{4});
 
 
 %% Output file setup
@@ -87,12 +87,17 @@ order = stimShuffle(lt, length(prob));
 
 trial = 1;
 
+dispMat = zeros(4,4)
+
 while trial <= l1
+    
+    [disp1, disp2, dispMat] = dynDisp(dispMat);
+    
     % Drawing shapes and flip to screen
-    Screen('DrawTexture', window, stim1, [], stimpos{order(trial,1)}, 0);
-    Screen('DrawTexture', window, stim2, [], stimpos{order(trial,2)}, 0);
-    Screen('DrawTexture', window, stim3, [], stimpos{order(trial,3)}, 0);
-    Screen('DrawTexture', window, stim4, [], stimpos{order(trial,4)}, 0);
+    %Screen('DrawTexture', window, stim{1}, [], stimpos{order(trial,1)}, 0);
+    Screen('DrawTexture', window, stim{disp1}, [], stimpos{2}, 0);
+    Screen('DrawTexture', window, stim{disp2}, [], stimpos{3}, 0);
+    %Screen('DrawTexture', window, stim{4}, [], stimpos{order(trial,4)}, 0);
     start = Screen('Flip', window);
 
 
@@ -104,24 +109,21 @@ while trial <= l1
     RT = responseTi - start;
     response = find(keyStateVec(activeKeys))
 
-    chosen = chosenStim(order(trial,1), order(trial,2), order(trial,3), order(trial,4), response);
+    %chosen = chosenStim(order(trial,1), order(trial,2), order(trial,3), order(trial,4), response);
 
-    if chosen == 's1'
-        Screen('DrawTexture', window, stim1, [], stimpos{response}, 0);
-    elseif chosen == 's2'
-        Screen('DrawTexture', window, stim2, [], stimpos{response}, 0);
-    elseif chosen == 's3'
-        Screen('DrawTexture', window, stim3, [], stimpos{response}, 0);
-    elseif chosen == 's4'
-        Screen('DrawTexture', window, stim4, [], stimpos{response}, 0);
+    if response == 2
+        Screen('DrawTexture', window, stim{disp1}, [], stimpos{2}, 0);
+        dispMat(2, disp1) = dispMat(2, disp1) + 1;
+    elseif response == 3
+        Screen('DrawTexture', window, stim{disp2}, [], stimpos{3}, 0);
+        dispMat(2, disp2) = dispMat(2, disp2) + 1;
     end
 
     Screen('Flip', window);
 
-    WaitSecs(2);
+    WaitSecs(0.1);
     
-    trial = trial + 1;
-    
+    trial = trial + 1;   
     
 end
 sca;
