@@ -85,9 +85,13 @@ order = stimShuffle(lt, length(prob));
 
 trial = 1;
 
-dispMat = zeros(4,4)
+dispMat = zeros(4,4);
 
 while trial <= l1
+    
+    % Reset outcome and response for each trials
+    outcome = '0';
+    response = [];
     
     [disp{1}, disp{2}, dispMat] = dynDisp(dispMat);
     
@@ -119,16 +123,37 @@ while trial <= l1
     %chosen = chosenStim(order(trial,1), order(trial,2), order(trial,3), order(trial,4), response);
 
     if response == 2
+        % Draw chosen image to screen
         Screen('DrawTexture', window, stim{disp{left}}, [], stimpos{2}, 0);
+        % Increase count fo chosen image
         dispMat(2, disp{left}) = dispMat(2, disp{left}) + 1;
+        % Determine outcome
+        outcome = num2str(pre(dispMat(2, disp{left}), disp{left}));
+        % Increment number of wins/non-wins for chosen image
+        if pre(dispMat(2, disp{left}), disp{left}) ~= 0
+            dispMat(3, disp{left}) = dispMat(3, disp{left}) + 1;
+        else 
+            dispMat(4, disp{left}) = dispMat(4, disp{left}) + 1;
+        end
+        
     elseif response == 3
         Screen('DrawTexture', window, stim{disp{right}}, [], stimpos{3}, 0);
         dispMat(2, disp{right}) = dispMat(2, disp{right}) + 1;
+        outcome = num2str(pre(dispMat(2, disp{right}), disp{right}));
+        if pre(dispMat(2, disp{right}), disp{right}) ~= 0
+            dispMat(3, disp{right}) = dispMat(3, disp{right}) + 1;
+        else 
+            dispMat(4, disp{right}) = dispMat(4, disp{right}) + 1;
+        end
     end
 
     Screen('Flip', window);
-
-    WaitSecs(0.1);
+    WaitSecs(0.3);
+    
+    % Display outcome
+    DrawFormattedText(window, outcome, 'center','center', [0 0 0]);    
+    Screen('Flip', window);    
+    WaitSecs(0.3);
     
     trial = trial + 1;
     
