@@ -160,5 +160,33 @@ while trial <= l1
     trial = trial + 1;
     
 end
+
+c1 = 0;
+c2 = -1;
+
+while c1 ~= c2
+    select = 'Chose prefered shape';
+    DrawFormattedText(window, select, 'center',screenYpixels/5, [0 0 0]);   
+    Screen('DrawTexture', window, stim{1}, [], stimpos{1}, 0);
+    Screen('DrawTexture', window, stim{2}, [], stimpos{2}, 0);
+    Screen('DrawTexture', window, stim{3}, [], stimpos{3}, 0);
+    Screen('DrawTexture', window, stim{4}, [], stimpos{4}, 0);
+    Screen('Flip', window);
+    
+    [~, keyStateVec] = KbWait([], 3, []);
+    c1 = find(keyStateVec(activeKeys));
+        
+    confirm = 'Confirm prefered shape, press any other key to return to previous screen';
+    DrawFormattedText(window, confirm, 'center',screenYpixels/5, [0 0 0]);   
+    Screen('DrawTexture', window, stim{1}, [], stimpos{1}, 0);
+    Screen('DrawTexture', window, stim{2}, [], stimpos{2}, 0);
+    Screen('DrawTexture', window, stim{3}, [], stimpos{3}, 0);
+    Screen('DrawTexture', window, stim{4}, [], stimpos{4}, 0);
+    Screen('Flip', window);  
+    
+    [~, keyStateVec] = KbWait([], 3, []);
+    c2 = find(keyStateVec(activeKeys));  
+end
+
 sca;
 end
