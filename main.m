@@ -13,8 +13,6 @@ if ismac
 elseif ispc
     addpath('.\Functions');
     addpath('.\Stimuli');
-else
-    disp('Paths not added')
 end
 
 %% Task parameters --------------------------------------------------------
@@ -91,12 +89,21 @@ dispMat = zeros(4,4)
 
 while trial <= l1
     
-    [disp1, disp2, dispMat] = dynDisp(dispMat);
+    [disp{1}, disp{2}, dispMat] = dynDisp(dispMat);
+    
+    %Randomise left-right positioning of stimuli
+    left = 0;
+    right = 0;
+    while left == right
+        left = randi(2);
+        right = randi(2);
+    end
+    
     
     % Drawing shapes and flip to screen
     %Screen('DrawTexture', window, stim{1}, [], stimpos{order(trial,1)}, 0);
-    Screen('DrawTexture', window, stim{disp1}, [], stimpos{2}, 0);
-    Screen('DrawTexture', window, stim{disp2}, [], stimpos{3}, 0);
+    Screen('DrawTexture', window, stim{disp{left}}, [], stimpos{2}, 0);
+    Screen('DrawTexture', window, stim{disp{right}}, [], stimpos{3}, 0);
     %Screen('DrawTexture', window, stim{4}, [], stimpos{order(trial,4)}, 0);
     start = Screen('Flip', window);
 
@@ -107,23 +114,23 @@ while trial <= l1
     [responseTi, keyStateVec] = KbWait([], [], GetSecs()+2);
 
     RT = responseTi - start;
-    response = find(keyStateVec(activeKeys))
+    response = find(keyStateVec(activeKeys));
 
     %chosen = chosenStim(order(trial,1), order(trial,2), order(trial,3), order(trial,4), response);
 
     if response == 2
-        Screen('DrawTexture', window, stim{disp1}, [], stimpos{2}, 0);
-        dispMat(2, disp1) = dispMat(2, disp1) + 1;
+        Screen('DrawTexture', window, stim{disp{left}}, [], stimpos{2}, 0);
+        dispMat(2, disp{left}) = dispMat(2, disp{left}) + 1;
     elseif response == 3
-        Screen('DrawTexture', window, stim{disp2}, [], stimpos{3}, 0);
-        dispMat(2, disp2) = dispMat(2, disp2) + 1;
+        Screen('DrawTexture', window, stim{disp{right}}, [], stimpos{3}, 0);
+        dispMat(2, disp{right}) = dispMat(2, disp{right}) + 1;
     end
 
     Screen('Flip', window);
 
     WaitSecs(0.1);
     
-    trial = trial + 1;   
+    trial = trial + 1;
     
 end
 sca;
