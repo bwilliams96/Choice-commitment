@@ -125,7 +125,7 @@ while trial <= l1
     if response == 2
         % Draw chosen image to screen
         Screen('DrawTexture', window, stim{disp{left}}, [], stimpos{2}, 0);
-        % Increase count fo chosen image
+        % Increase count for chosen image
         dispMat(2, disp{left}) = dispMat(2, disp{left}) + 1;
         % Determine outcome
         outcome = num2str(pre(dispMat(2, disp{left}), disp{left}));
@@ -165,7 +165,7 @@ c1 = 0;
 c2 = -1;
 
 while c1 ~= c2
-    select = 'Chose prefered shape';
+    select = 'Choose prefered shape';
     DrawFormattedText(window, select, 'center',screenYpixels/5, [0 0 0]);   
     Screen('DrawTexture', window, stim{1}, [], stimpos{1}, 0);
     Screen('DrawTexture', window, stim{2}, [], stimpos{2}, 0);

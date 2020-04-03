@@ -20,8 +20,9 @@ matrix = The updated input matrix
 disp1 = 0;
 disp2 = 0;
 
-% Randomly chose stimuli for the first trial
-if sum(matrix(2,:)) == 0
+% Randomly chose stimuli for the first trial or when all stimuli have been
+% chosen an equal number of times
+if range(matrix(2,:)) == 0
     while disp1 == disp2
         disp1 = randi(length(matrix));
         disp2 = randi(length(matrix));
