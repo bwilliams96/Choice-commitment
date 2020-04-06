@@ -188,5 +188,48 @@ while c1 ~= c2
     c2 = find(keyStateVec(activeKeys));  
 end
 
+trial = 1;
+while trial <= l2
+    
+    % Reset outcome and response for each trials
+    outcome = '0';
+    response = [];
+    
+    % Drawing shapes and flip to screen
+    Screen('DrawTexture', window, stim{1}, [], stimpos{order(trial,1)}, 0);
+    Screen('DrawTexture', window, stim{2}, [], stimpos{order(trial,2)}, 0);
+    Screen('DrawTexture', window, stim{3}, [], stimpos{order(trial,3)}, 0);
+    Screen('DrawTexture', window, stim{4}, [], stimpos{order(trial,4)}, 0);
+    start = Screen('Flip', window);
+    
+    % Wait for a response (max 2sec) then display only the chosen stimuli on
+    % screen
+
+    [responseTi, keyStateVec] = KbWait([], [], GetSecs()+2);
+
+    RT = responseTi - start;
+    response = find(keyStateVec(activeKeys));
+
+    chosen = chosenStim(order(trial,1), order(trial,2), order(trial,3), order(trial,4), response);
+    
+    if chosen == 's1'
+        Screen('DrawTexture', window, stim{1}, [], stimpos{response}, 0);
+    elseif chosen == 's2'
+        Screen('DrawTexture', window, stim{2}, [], stimpos{response}, 0);
+    elseif chosen == 's3'
+        Screen('DrawTexture', window, stim{3}, [], stimpos{response}, 0);
+    elseif chosen == 's4'
+        Screen('DrawTexture', window, stim{4}, [], stimpos{response}, 0);
+    end
+    
+    
+    Screen('Flip', window);
+    
+    
+    WaitSecs(1);
+    
+    trial = trial + 1;
+    
+end
 sca;
 end
