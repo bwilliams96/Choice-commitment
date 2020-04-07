@@ -17,14 +17,14 @@ end
 
 %% Task parameters --------------------------------------------------------
 
-cond1 = [70,50,50,30];
-cond2 = [50,50,70,30];
-cond3 = [30,50,50,70];
-l1 = 50;
-l2 = 50;
-prob = cond1;
+% The first column of the condition matrix will be contain the asigned
+% probability for the prefered stimulus
+cond = input('Enter condition number: ');
+probs = [[70,50,50,30]; [50,50,70,30]; [30,50,50,70];];
+l1 = 1;
+l2 = 10;
+prob = probs(cond, :);
 trueLength = 10;
-
 
 %% ------------------------------------------------------------------------
 
@@ -85,7 +85,7 @@ order = stimShuffle(lt, length(prob));
 
 trial = 1;
 
-dispMat = zeros(4,4);
+dispMat = zeros(7,4);
 
 while trial <= l1
     
@@ -119,8 +119,6 @@ while trial <= l1
 
     RT = responseTi - start;
     response = find(keyStateVec(activeKeys));
-
-    %chosen = chosenStim(order(trial,1), order(trial,2), order(trial,3), order(trial,4), response);
 
     if response == 2
         % Draw chosen image to screen
@@ -188,6 +186,14 @@ while c1 ~= c2
     c2 = find(keyStateVec(activeKeys));  
 end
 
+% Orders the outcome contingency columns in post so the column number of 
+% the prefered stimulus is equal to its asigned  probability in cond
+if c2 ~= 1
+    post1 = post;
+    post1(:, c2) = post(:, 1);
+    post1(:, 1) = post(:, c2);
+    post = post1;
+
 trial = 1;
 while trial <= l2
     
@@ -209,24 +215,64 @@ while trial <= l2
 
     RT = responseTi - start;
     response = find(keyStateVec(activeKeys));
-
-    chosen = chosenStim(order(trial,1), order(trial,2), order(trial,3), order(trial,4), response);
     
-    if chosen == 's1'
-        Screen('DrawTexture', window, stim{1}, [], stimpos{response}, 0);
-    elseif chosen == 's2'
-        Screen('DrawTexture', window, stim{2}, [], stimpos{response}, 0);
-    elseif chosen == 's3'
-        Screen('DrawTexture', window, stim{3}, [], stimpos{response}, 0);
-    elseif chosen == 's4'
-        Screen('DrawTexture', window, stim{4}, [], stimpos{response}, 0);
+    if isempty(response)
+        chosen = 'na';
+    else
+        chosen = chosenStim(order(trial,1), order(trial,2), order(trial,3), order(trial,4), response);
     end
     
+    if chosen == 's1'
+        % Draw chosen image to screen
+        Screen('DrawTexture', window, stim{1}, [], stimpos{response}, 0);
+        % Increase count for chosen image
+        dispMat(5, 1) = dispMat(5, 1) + 1;
+        % Determine outcome
+        outcome = num2str(post(dispMat(5, 1), 1));
+        % Increment number of wins/non-wins for chosen image
+        if post(dispMat(5, 1), 1) ~= 0
+            dispMat(6, 1) = dispMat(6, 1) + 1;
+        else 
+            dispMat(7, 1) = dispMat(7, 1) + 1;
+        end
+    elseif chosen == 's2'
+        Screen('DrawTexture', window, stim{2}, [], stimpos{response}, 0);
+        dispMat(5, 2) = dispMat(5, 2) + 1;
+        outcome = num2str(post(dispMat(5, 2), 2));
+        if post(dispMat(5, 2), 2) ~= 0
+            dispMat(6, 2) = dispMat(6, 2) + 1;
+        else 
+            dispMat(7, 2) = dispMat(7, 2) + 1;
+        end
+    elseif chosen == 's3'
+        Screen('DrawTexture', window, stim{3}, [], stimpos{response}, 0);
+        dispMat(5, 3) = dispMat(5, 3) + 1;
+        outcome = num2str(post(dispMat(5, 3), 3));
+        if post(dispMat(5, 3), 3) ~= 0
+            dispMat(6, 3) = dispMat(6, 3) + 1;
+        else 
+            dispMat(7, 3) = dispMat(7, 3) + 1;
+        end
+    elseif chosen == 's4'
+        Screen('DrawTexture', window, stim{4}, [], stimpos{response}, 0);
+        dispMat(5, 4) = dispMat(5, 4) + 1;
+        outcome = num2str(post(dispMat(5, 4), 4));
+        if post(dispMat(5, 4), 4) ~= 0
+            dispMat(6, 4) = dispMat(6, 4) + 1;
+        else 
+            dispMat(7, 4) = dispMat(7, 4) + 1;
+        end
+    elseif chosen == 'na'
+        DrawFormattedText(window, 'No image chosen', 'center','center', [0 0 0]);
+    end
+   
+    Screen('Flip', window);    
+    WaitSecs(0.3);
     
-    Screen('Flip', window);
-    
-    
-    WaitSecs(1);
+    % Display outcome
+    DrawFormattedText(window, outcome, 'center','center', [0 0 0]);    
+    Screen('Flip', window);    
+    WaitSecs(0.3);
     
     trial = trial + 1;
     

@@ -20,12 +20,14 @@ matrix = The updated input matrix
 disp1 = 0;
 disp2 = 0;
 
+[~, n] = size(matrix);
+
 % Randomly chose stimuli for the first trial or when all stimuli have been
 % chosen an equal number of times
 if range(matrix(2,:)) == 0
     while disp1 == disp2
-        disp1 = randi(length(matrix));
-        disp2 = randi(length(matrix));
+        disp1 = randi(n);
+        disp2 = randi(n);
     end
 else
     % Find the proportion of trials that each stimuli has been chosen, minus
