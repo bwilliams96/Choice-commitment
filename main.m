@@ -193,6 +193,7 @@ if c2 ~= 1
     post1(:, c2) = post(:, 1);
     post1(:, 1) = post(:, c2);
     post = post1;
+end
 
 trial = 1;
 while trial <= l2
