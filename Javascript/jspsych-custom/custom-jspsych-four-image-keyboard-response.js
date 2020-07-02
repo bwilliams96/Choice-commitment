@@ -43,6 +43,12 @@ jsPsych.plugins["4image-keyboard-response"] = (function() {
             default: undefined,
             description: 'The far right image to be displayed'
           },
+        showchoice: {
+            type: jsPsych.plugins.parameterType.STRING,
+            pretty_name: 'Image chosen',
+            default: null,
+            description: 'The chosen image will be displayed, the others will be transparent'
+        },
         choices: {
           type: jsPsych.plugins.parameterType.KEYCODE,
           array: true,
@@ -79,7 +85,28 @@ jsPsych.plugins["4image-keyboard-response"] = (function() {
   
     plugin.trial = function(display_element, trial) {
 
-      var transparency = {stim1: 0, stim2: 0, stim3: 0 stim4: 0}
+      var transparency = {stim1: 1, stim2: 1, stim3: 1, stim4: 1}
+
+      if (trial.showchoice == "f-left"){
+        transparency.stim2 = 0
+        transparency.stim3 = 0
+        transparency.stim4 = 0
+      } // far left image chosen
+      if (trial.showchoice == "c-left"){
+        transparency.stim1 = 0
+        transparency.stim3 = 0
+        transparency.stim4 = 0
+      } // center left image chosen
+      if (trial.showchoice == "c-right"){
+        transparency.stim1 = 0
+        transparency.stim2 = 0
+        transparency.stim4 = 0
+      } // center right image chosen
+      if (trial.showchoice == "f-right"){
+        transparency.stim1 = 0
+        transparency.stim2 = 0
+        transparency.stim3 = 0
+      } // far right image chosen
   
       // display stimulus
       var html = '<img src="'+trial.stimulus+'" id="jspsych-4image-keyboard-response-stimulus" style="';

@@ -30,7 +30,13 @@ jsPsych.plugins["2image-keyboard-response"] = (function() {
             pretty_name: 'Stimulus2',
             default: undefined,
             description: 'The image to be displayed on the right hand side'
-          }, 
+          },
+        showchoice: {
+            type: jsPsych.plugins.parameterType.STRING,
+            pretty_name: 'Image chosen',
+            default: null,
+            description: 'The chosen image will be displayed, the others will be transparent'
+        },
         choices: {
           type: jsPsych.plugins.parameterType.KEYCODE,
           array: true,
@@ -67,7 +73,14 @@ jsPsych.plugins["2image-keyboard-response"] = (function() {
   
     plugin.trial = function(display_element, trial) {
 
-      var transparency = {stim1: 0, stim2: 0}
+      var transparency = {stim1: 1, stim2: 1}
+
+      if (trial.showchoice == "c-left"){
+        transparency.stim2 = 0
+      } // center left image chosen
+      if (trial.showchoice == "c-right"){
+        transparency.stim1 = 0
+      } // center right image chosen
 
       // display stimulus
       var html = '<img src="'+trial.stimulus+'" id="jspsych-2image-keyboard-response-stimulus" style="';
