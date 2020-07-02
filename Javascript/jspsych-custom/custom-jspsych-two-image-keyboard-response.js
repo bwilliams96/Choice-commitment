@@ -83,20 +83,12 @@ jsPsych.plugins["2image-keyboard-response"] = (function() {
       } // center right image chosen
 
       // display stimulus
-      var html = '<img src="'+trial.stimulus+'" id="jspsych-2image-keyboard-response-stimulus" style="';
-      if(trial.stimulus_height !== null){
-        html += 'height:'+trial.stimulus_height+'px; '
-        if(trial.stimulus_width == null && trial.maintain_aspect_ratio){
-          html += 'width: auto; ';
-        }
-      }
-      if(trial.stimulus_width !== null){
-        html += 'width:'+trial.stimulus_width+'px; '
-        if(trial.stimulus_height == null && trial.maintain_aspect_ratio){
-          html += 'height: auto; ';
-        }
-      }
-      html +='"></img>';
+      var html = '<div class="row style="display:flex" width="100%">'
+      html += '<div class="column" style="padding:10px"><img src="'+trial.stimulus1+'" id="jspsych-2image-keyboard-response-stimulus1" style="width: 100%; height: 100%; opacity:0;"></img></div>'
+      html += '<div class="column" style="padding:10px"><img src="'+trial.stimulus1+'" id="jspsych-2image-keyboard-response-stimulus1" style="width: 100%; height: 100%; opacity:'+transparency.stim1+';"></img></div>'
+      html += '<div class="column" style="padding:10px"><img src="'+trial.stimulus2+'" id="jspsych-2image-keyboard-response-stimulus1" style="width: 100%; height: 100%; opacity:'+transparency.stim2+';"></img></div>'
+      html += '<div class="column" style="padding:10px"><img src="'+trial.stimulus2+'" id="jspsych-2image-keyboard-response-stimulus1" style="width: 100%; height: 100%; opacity:0;"></img></div>'
+      html +='</div>';
   
       // add prompt
       if (trial.prompt !== null){
