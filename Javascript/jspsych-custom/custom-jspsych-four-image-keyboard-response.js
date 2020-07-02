@@ -109,11 +109,11 @@ jsPsych.plugins["4image-keyboard-response"] = (function() {
       } // far right image chosen
   
       // display stimulus
-      var html = '<div class="row style="display:flex" width="100%">'
-      html += '<div class="column" style="padding:10px"><img src="'+trial.stimulus1+'" id="jspsych-2image-keyboard-response-stimulus1" style="width: 100%; height: 100%; opacity:'+transparency.stim1+';"></img></div>'
-      html += '<div class="column" style="padding:10px"><img src="'+trial.stimulus2+'" id="jspsych-2image-keyboard-response-stimulus1" style="width: 100%; height: 100%; opacity:'+transparency.stim2+';"></img></div>'
-      html += '<div class="column" style="padding:10px"><img src="'+trial.stimulus3+'" id="jspsych-2image-keyboard-response-stimulus1" style="width: 100%; height: 100%; opacity:'+transparency.stim3+';"></img></div>'
-      html += '<div class="column" style="padding:10px"><img src="'+trial.stimulus4+'" id="jspsych-2image-keyboard-response-stimulus1" style="width: 100%; height: 100%; opacity:'+transparency.stim4+';"></img></div>'
+      var html = '<div class="row" style="display:flex" width="100%">'
+      html += '<div class="column" style="padding:10px"><img src="'+trial.stimulus1+'" id="jspsych-image-keyboard-response-stimulus" style="width: 100%; height: 100%; opacity:'+transparency.stim1+';"></img></div>'
+      html += '<div class="column" style="padding:10px"><img src="'+trial.stimulus2+'" id="jspsych-image-keyboard-response-stimulus" style="width: 100%; height: 100%; opacity:'+transparency.stim2+';"></img></div>'
+      html += '<div class="column" style="padding:10px"><img src="'+trial.stimulus3+'" id="jspsych-image-keyboard-response-stimulus" style="width: 100%; height: 100%; opacity:'+transparency.stim3+';"></img></div>'
+      html += '<div class="column" style="padding:10px"><img src="'+trial.stimulus4+'" id="jspsych-image-keyboard-response-stimulus" style="width: 100%; height: 100%; opacity:'+transparency.stim4+';"></img></div>'
       html +='</div>';
   
       // add prompt
@@ -160,7 +160,7 @@ jsPsych.plugins["4image-keyboard-response"] = (function() {
   
         // after a valid response, the stimulus will have the CSS class 'responded'
         // which can be used to provide visual feedback that a response was recorded
-        display_element.querySelector('#jspsych-4image-keyboard-response-stimulus').className += ' responded';
+        display_element.querySelector('#jspsych-image-keyboard-response-stimulus').className += ' responded';
   
         // only record the first response
         if (response.key == null) {
@@ -186,7 +186,7 @@ jsPsych.plugins["4image-keyboard-response"] = (function() {
       // hide stimulus if stimulus_duration is set
       if (trial.stimulus_duration !== null) {
         jsPsych.pluginAPI.setTimeout(function() {
-          display_element.querySelector('#jspsych-4image-keyboard-response-stimulus').style.visibility = 'hidden';
+          display_element.querySelector('#jspsych-image-keyboard-response-stimulus').style.visibility = 'hidden';
         }, trial.stimulus_duration);
       }
   
