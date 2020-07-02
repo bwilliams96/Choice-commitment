@@ -1,6 +1,6 @@
 /**
- * jspsych-image-keyboard-response
- * Josh de Leeuw
+ * jspsych-4image-keyboard-response
+ * Josh de Leeuw, adapted by Brendan Williams
  *
  * plugin for displaying a stimulus and getting a keyboard response
  *
@@ -9,40 +9,40 @@
  **/
 
 
-jsPsych.plugins["image-keyboard-response"] = (function() {
+jsPsych.plugins["4image-keyboard-response"] = (function() {
 
     var plugin = {};
   
-    jsPsych.pluginAPI.registerPreload('image-keyboard-response', 'stimulus', 'image');
+    jsPsych.pluginAPI.registerPreload('4image-keyboard-response', 'stimulus', 'image');
   
     plugin.info = {
-      name: 'image-keyboard-response',
+      name: '4image-keyboard-response',
       description: '',
       parameters: {
-        stimulus: {
+        stimulus1: {
           type: jsPsych.plugins.parameterType.IMAGE,
-          pretty_name: 'Stimulus',
+          pretty_name: 'Stimulus1',
           default: undefined,
-          description: 'The image to be displayed'
+          description: 'The far left image to be displayed'
         },
-        stimulus_height: {
-          type: jsPsych.plugins.parameterType.INT,
-          pretty_name: 'Image height',
-          default: null,
-          description: 'Set the image height in pixels'
+        stimulus2: {
+            type: jsPsych.plugins.parameterType.IMAGE,
+            pretty_name: 'Stimulus2',
+            default: undefined,
+            description: 'The left center image to be displayed'
+          },
+        stimulus3: {
+          type: jsPsych.plugins.parameterType.IMAGE,
+          pretty_name: 'Stimulus3',
+          default: undefined,
+          description: 'The right center image to be displayed'
         },
-        stimulus_width: {
-          type: jsPsych.plugins.parameterType.INT,
-          pretty_name: 'Image width',
-          default: null,
-          description: 'Set the image width in pixels'
-        },
-        maintain_aspect_ratio: {
-          type: jsPsych.plugins.parameterType.BOOL,
-          pretty_name: 'Maintain aspect ratio',
-          default: true,
-          description: 'Maintain the aspect ratio after setting width or height'
-        },
+        stimulus4: {
+            type: jsPsych.plugins.parameterType.IMAGE,
+            pretty_name: 'Stimulus4',
+            default: undefined,
+            description: 'The far right image to be displayed'
+          },
         choices: {
           type: jsPsych.plugins.parameterType.KEYCODE,
           array: true,
@@ -78,9 +78,11 @@ jsPsych.plugins["image-keyboard-response"] = (function() {
     }
   
     plugin.trial = function(display_element, trial) {
+
+      var transparency = {stim1: 0, stim2: 0, stim3: 0 stim4: 0}
   
       // display stimulus
-      var html = '<img src="'+trial.stimulus+'" id="jspsych-image-keyboard-response-stimulus" style="';
+      var html = '<img src="'+trial.stimulus+'" id="jspsych-4image-keyboard-response-stimulus" style="';
       if(trial.stimulus_height !== null){
         html += 'height:'+trial.stimulus_height+'px; '
         if(trial.stimulus_width == null && trial.maintain_aspect_ratio){
@@ -139,7 +141,7 @@ jsPsych.plugins["image-keyboard-response"] = (function() {
   
         // after a valid response, the stimulus will have the CSS class 'responded'
         // which can be used to provide visual feedback that a response was recorded
-        display_element.querySelector('#jspsych-image-keyboard-response-stimulus').className += ' responded';
+        display_element.querySelector('#jspsych-4image-keyboard-response-stimulus').className += ' responded';
   
         // only record the first response
         if (response.key == null) {
@@ -165,7 +167,7 @@ jsPsych.plugins["image-keyboard-response"] = (function() {
       // hide stimulus if stimulus_duration is set
       if (trial.stimulus_duration !== null) {
         jsPsych.pluginAPI.setTimeout(function() {
-          display_element.querySelector('#jspsych-image-keyboard-response-stimulus').style.visibility = 'hidden';
+          display_element.querySelector('#jspsych-4image-keyboard-response-stimulus').style.visibility = 'hidden';
         }, trial.stimulus_duration);
       }
   
