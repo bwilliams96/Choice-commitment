@@ -4,18 +4,92 @@
         <title>My experiment</title>
         <script src="jspsych-6.1.0/jspsych.js"></script>
         <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-html-button-response.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-survey-likert.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-fullscreen.js"></script>
         <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
     </head>
     <body></body>
     <script>
 
-    var hello_trial = {
+    var timeline = []
+
+    var end_trial = {
         type: 'html-keyboard-response',
-        stimulus: 'Hello world!'
+        stimulus: 'This is the end of the the experiment. Thank you for your time'
+    };
+
+    var hello_trial = {
+        type: 'html-button-response',
+        stimulus: 'Welcome to the experiment!',
+        choices: ['Start']
+    };
+
+    var tired = [];
+    for (var i = 1; i <= 3; i++) {
+    tired.push(i);
     }
 
+    var nested1 = {
+        type: 'html-keyboard-response',
+        stimulus: 'This is nested pt1'
+    };
+    var nested2 = {
+        type: 'html-keyboard-response',
+        stimulus: 'This is nested pt2'
+    };
+    var nested3 = {
+        type: 'html-keyboard-response',
+        stimulus: 'This is nested pt3'
+    };
+    var nested4 = {
+        type: 'html-keyboard-response',
+        stimulus: 'This is nested pt4'
+    };
+
+    var nested_timeline = [nested1, nested2, nested3, nested4];  
+    
+    var i = 0
+    var loop = {
+    timeline: nested_timeline,
+    loop_function: function() {
+        while (i <=1) {
+            return true;
+            i++;
+        }
+    }
+  }
+
+    
+    var tsleep = [
+        "None",
+        "1-2 hours",
+        "3-4 hours",
+        "5-6 hours",
+        "7-8 hours",
+        "9-10 hours",
+        "10 + hours"
+    ];
+
+    var question_ask = {
+        type: 'survey-likert',
+        questions: [
+            {prompt: "how tired are you feeling today", labels: tired},
+            {prompt: "How much sleep did you get", labels: tsleep}
+        ]
+    };
+
+    /*timeline.push({
+        type: 'fullscreen',
+        fullscreen_mode: true
+    }); */
+    timeline.push(hello_trial);
+    timeline.push(question_ask);
+    timeline.push(loop);
+    timeline.push(end_trial);
+
     jsPsych.init({
-        timeline: [hello_trial]
+        timeline: timeline
     })
 
     </script>
