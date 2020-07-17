@@ -37,14 +37,15 @@
         
         var trial_1 = {
             type: "2image-keyboard-response",
-            stimulus1: 'img/Circle.png', 
-            stimulus2: 'img/Triangle.png',
+            stimulus1: 'img/Circle.jpg', 
+            stimulus2: 'img/Triangle.jpg',
             choices: ['c', 't']
         };
 
         var trial_2 = {
             type: "2image-keyboard-response",
-            stimulus: ['img/Triangle.png', 'img/Diamond.png'],
+            stimulus1: 'img/Triangle.png', 
+            stimulus2: 'img/Diamond.png',
             choices: ['t', 'd']
         };
 
@@ -117,8 +118,8 @@
         timeline.push(instructions);
         timeline.push(trial_1);
         timeline.push(fixation);
-        timeline.push(debrief_block);
         timeline.push(choice_question);
+        timeline.push(debrief_block);
 
         jsPsych.init({
             timeline: timeline
