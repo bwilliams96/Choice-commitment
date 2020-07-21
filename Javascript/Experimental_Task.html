@@ -20,9 +20,9 @@
             choices: ['Begin']
         }
 
-        var instructions = {
+        var instructions1 = {
             type: "html-keyboard-response",
-            stimulus: "<p>In this experiment, you will see shapes (circle, square, " +
+            stimulus: "<p>Phase 1</p><p>In this experiment, you will see 2 shapes (either a circle, square, " +
             " diamond, triangle) appear on the screen randomly paired.</p><p>You must " +
             "choose only <strong>1</strong> of the 2 shapes displayed on the screen during each " +
             "trial.</p><p>Only <strong>1</strong> of the 2 shapes will lead to  " +
@@ -34,44 +34,46 @@
             "you choose <strong>triangle</strong>, press the letter 't' on the keyboard.</p>" +
             "<p>Press any key to begin.</p>",
         };
-        
-        var trial_1 = {
+
+        var trial_p1_1 = {
             type: "2image-keyboard-response",
-            stimulus1: 'img/Circle.jpg', 
-            stimulus2: 'img/Triangle.jpg',
-            choices: ['c', 't']
+            stimulus1: 'img/Circle.png', 
+            stimulus2: 'img/Triangle.png',
+            choices: ['c', 't'],
         };
 
-        var trial_2 = {
+        var trial_p1_2 = {
             type: "2image-keyboard-response",
             stimulus1: 'img/Triangle.png', 
             stimulus2: 'img/Diamond.png',
             choices: ['t', 'd']
         };
 
-        var trial_3 = {
+        var trial_p1_3 = {
             type: "2image-keyboard-response",
-            stimulus1: 'img/Square.png',
+            stimulus1: 'img/Square.png', 
             stimulus2: 'img/Diamond.png',
             choices: ['s', 'd']
         };
 
-        var trial_4 = {
+        var trial_p1_4 = {
             type: "2image-keyboard-response",
             stimulus1: 'img/Diamond.png', 
             stimulus2: 'img/Circle.png',
             choices: ['d', 'c']
         };
 
-        var trial_5 = {
+        var trial_p1_5 = {
             type: "2image-keyboard-response",
-            stimulus: 'img/Triangle.png, img/Square.png',
+            stimulus1: 'img/Triangle.png', 
+            stimulus2: 'img/Square.png',
             choices: ['t', 's']
         };
 
-        var trial_6 = {
+        var trial_p1_6 = {
             type: "2image-keyboard-response",
-            stimulus: 'img/Circle.png, img/Square.png',
+            stimulus1: 'img/Circle.png', 
+            stimulus2: 'img/Square.png',
             choices: ['c', 's']
         }
 
@@ -82,13 +84,29 @@
             trial_duration: 1000,
         }
 
-        var test = {
-            type: "2image-keyboard-response",
-            stimulus: jsPsych.timelineVariable('stimulus'),
-            choices: ['c', 't', 'd', 's']
+        var point_accumulation1 = {
+            type: "html-keyboard-response",
+            stimulus: function() {
+                var trials = jsPsych.data.get().filter({test_part: 'test'});
+                var correct_trials = trials.filter({correct: true});
+                var accuracy = Math.floor(Math.random()* 2);
+                
+                return "<p>"+accuracy+" point</p>";
+            }
         }
-        
-        //timeline1 = [trial_1, fixation, trial_2, fixation, trial_3, fixation, trial_4, fixation, trial_5, fixation, trial_6]
+
+        var debrief_block1 = {
+            type: "html-keyboard-response",
+            stimulus: function() {
+
+                var trials = jsPsych.data.get().filter({test_part: 'test'});
+                var correct_trials = trials.filter({correct: true});
+                var accuracy = Math.round(correct_trials.count() / trials.count() * 100);
+
+                return "<p>You responded correctly on "+accuracy+"% of the trials.</p>"+
+                "<p>Press any key to continue.</p>";         
+            }
+        }
 
         var choice_question = {
             type: "html-keyboard-response",
@@ -103,28 +121,77 @@
             choices: ['c', 't', 'd', 's']
         }
 
-        var debrief_block = {
+        var question_block = {
+            type: "html-button-response",
+            stimulus: "How confident do you feel about your preferred choice of shape on a scale " +
+            "of 1-10, with 1 being the least confident and 10 being the most confident?",
+            choices: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+        }
+
+        var instructions2 = {
             type: "html-keyboard-response",
-            stimulus: function() {
+            stimulus: "<p>Phase 2</p><p>In this experiment, you will see 4 shapes (circle, square, " +
+            " diamond, triangle) appear on  the screen.</p><p>You must " +
+            "choose only <strong>1</strong> of the 4 shapes displayed on the screen during each " +
+            "trial.</p><p>Only <strong>1</strong> of the 4 shapes will lead to  " +
+            "a positive outcome (a point being awarded).</p><p>Your goal is to " +
+            "accumulate as many points as possible by the end of the trials.</p><p>If you " +
+            "choose <strong>circle</strong>, press the letter 'c' on the keyboard.</p><p>If " +
+            "you choose <strong>square</strong>, press the letter 's' on the keyboard.</p><p>If " +
+            "you choose <strong>diamond</strong>, press the letter 'd' on the keyboard.</p><p>If " +
+            "you choose <strong>triangle</strong>, press the letter 't' on the keyboard.</p>" +
+            "<p>Press any key to begin.</p>",
+        };
 
-                var trials = jsPsych.data.get().filter({test_part: 'test'});
-                var correct_trials = trials.filter({correct: true});
-                var accuracy = Math.round(correct_trials.count() / trials.count() * 100);
+        var trial_p2_1 = {
+            type: "4image-keyboard-response",
+            stimulus1: 'img/Circle.png', 
+            stimulus2: 'img/Triangle.png',
+            stimulus3: 'img/Diamond.png',
+            stimulus4: 'img/Square.png', 
+            choices: ['c', 't', 'd', 's'],
+            repetitions: 5,
+            randomize_order: true,
 
-                return "<p>You responded correctly on "+accuracy+"% of the trials.</p>"+
-                "<p>Press any key to continue.</p>";         
-            }
+        };
+
+        var finish = {
+            type: "html-keyboard-response",
+            stimulus: 'Thank you for taking part in the experiment.'
         }
 
         timeline.push(welcome);
-        timeline.push(instructions);
-        timeline.push(trial_1);
+        timeline.push(instructions1);
         timeline.push(fixation);
+        timeline.push(trial_p1_1);
+        timeline.push(point_accumulation1);
+        timeline.push(fixation);
+        timeline.push(trial_p1_2);
+        timeline.push(point_accumulation1);
+        timeline.push(fixation);
+        timeline.push(trial_p1_3);
+        timeline.push(point_accumulation1);
+        timeline.push(fixation);
+        timeline.push(trial_p1_4);
+        timeline.push(point_accumulation1);
+        timeline.push(fixation);
+        timeline.push(trial_p1_5);
+        timeline.push(point_accumulation1);
+        timeline.push(fixation);
+        timeline.push(trial_p1_6);
+        timeline.push(point_accumulation1);
+        timeline.push(debrief_block1);
         timeline.push(choice_question);
-        timeline.push(debrief_block);
+        timeline.push(question_block);
+        timeline.push(instructions2);
+        timeline.push(fixation);
+        timeline.push(trial_p2_1);
+        timeline.push(point_accumulation1);
+        timeline.push(finish);
 
         jsPsych.init({
             timeline: timeline
         });
+        
     </script>
 </html>
