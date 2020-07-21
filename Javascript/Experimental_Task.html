@@ -34,6 +34,73 @@
             "<p>Press any key to begin.</p>",
         };
 
+        var phase1_trial = {
+            type: "2image-keyboard-response",
+            choices: ['a', 's'],
+            timeline: [
+                {
+                    type: 'html-keyboard-response',
+                    stimulus: '<div style="font-size:60px;">+</div',
+                    choices: jsPsych.NO_KEYS,
+                    trial_duration: 1000
+                },
+                {
+                    type: '2image-keyboard-response',
+                    stimulus: jsPsych.timelineVariable('stimulus'),
+                    choices: ['a', 's']
+                },
+                {
+                    type: "2image-keyboard-response",
+                    stimulus1: 'img/Circle.png', 
+                    stimulus2: 'img/Triangle.png',
+                    choices: ['a', 's'],
+                },
+                {
+                    type: "2image-keyboard-response",
+                    stimulus1: 'img/Triangle.png', 
+                    stimulus2: 'img/Diamond.png',
+                    choices: ['a', 's']
+                },
+                {
+                    type: "2image-keyboard-response",
+                    stimulus1: 'img/Square.png', 
+                    stimulus2: 'img/Diamond.png',
+                    choices: ['a', 's']
+                },
+                {
+                    type: "2image-keyboard-response",
+                    stimulus1: 'img/Diamond.png', 
+                    stimulus2: 'img/Circle.png',
+                    choices: ['a', 's']
+                },
+                {
+                    type: "2image-keyboard-response",
+                    stimulus1: 'img/Triangle.png', 
+                    stimulus2: 'img/Square.png',
+                    choices: ['a', 's']
+                },
+                {
+                    type: "2image-keyboard-response",
+                    stimulus1: 'img/Circle.png', 
+                    stimulus2: 'img/Square.png',
+                    choices: ['a', 's']
+                },
+            ],
+            timeline_variables: [
+                {stimulus: 'img/Circle.png'},
+                {stimulus: 'img/Triangle.png'},
+                {stimulus: 'img/Diamond.png'},
+                {stimulus: 'img/Square.png'}
+            ],
+            randomize_order: true,
+            sample: {
+                type: 'without-replacement',
+                size: 1,
+            }
+
+            
+        }
+
         var trial_p1_1 = {
             type: "2image-keyboard-response",
             stimulus1: 'img/Circle.png', 
