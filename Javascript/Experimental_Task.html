@@ -106,41 +106,47 @@
             stimulus1: 'img/Circle.png', 
             stimulus2: 'img/Triangle.png',
             choices: ['a', 's'],
+            showchoice: true
         };
 
         var trial_p1_2 = {
             type: "2image-keyboard-response",
             stimulus1: 'img/Triangle.png', 
-            stimulus2: 'img/Diamond.png',
-            choices: ['a', 's']
+            stimulus2: 'img/Diamond.png', 
+            choices: ['a', 's'],
+            showchoice: true
         };
 
         var trial_p1_3 = {
             type: "2image-keyboard-response",
             stimulus1: 'img/Square.png', 
             stimulus2: 'img/Diamond.png',
-            choices: ['a', 's']
+            choices: ['a', 's'],
+            showchoice: true
         };
 
         var trial_p1_4 = {
             type: "2image-keyboard-response",
             stimulus1: 'img/Diamond.png', 
             stimulus2: 'img/Circle.png',
-            choices: ['a', 's']
+            choices: ['a', 's'],
+            showchoice: true
         };
 
         var trial_p1_5 = {
             type: "2image-keyboard-response",
             stimulus1: 'img/Triangle.png', 
             stimulus2: 'img/Square.png',
-            choices: ['a', 's']
+            choices: ['a', 's'],
+            showchoice: true
         };
 
         var trial_p1_6 = {
             type: "2image-keyboard-response",
             stimulus1: 'img/Circle.png', 
             stimulus2: 'img/Square.png',
-            choices: ['a', 's']
+            choices: ['a', 's'],
+            showchoice: true
         }
 
         var fixation = {
@@ -155,7 +161,7 @@
             choices: jsPsych.NO_KEYS,
             trial_duration: 1000,
             stimulus: function() {
-                
+
                 var trials = jsPsych.data.get().filter({test_part: 'test'});
                 var correct_trials = trials.filter({correct: true});
                 var accuracy = Math.floor(Math.random()* 2);
