@@ -28,10 +28,9 @@
             "trial.</p><p>Only <strong>1</strong> of the 2 shapes will lead to  " +
             "a positive outcome (a point being awarded).</p><p>Your goal is to " +
             "accumulate as many points as possible by the end of the trials.</p><p>If you " +
-            "choose <strong>circle</strong>, press the letter 'c' on the keyboard.</p><p>If " +
-            "you choose <strong>square</strong>, press the letter 's' on the keyboard.</p><p>If " +
-            "you choose <strong>diamond</strong>, press the letter 'd' on the keyboard.</p><p>If " +
-            "you choose <strong>triangle</strong>, press the letter 't' on the keyboard.</p>" +
+            "choose the shape on the <strong>left</strong> side of the screen, press <strong>'a'</strong> " +
+            "on the keyboard.</p><p>If you choose the shape on the <strong>right</strong> side of the " +
+            "screen, press the letter <strong>'s'</strong> on the keyboard.</p>" +
             "<p>Press any key to begin.</p>",
         };
 
@@ -39,42 +38,42 @@
             type: "2image-keyboard-response",
             stimulus1: 'img/Circle.png', 
             stimulus2: 'img/Triangle.png',
-            choices: ['c', 't'],
+            choices: ['a', 's'],
         };
 
         var trial_p1_2 = {
             type: "2image-keyboard-response",
             stimulus1: 'img/Triangle.png', 
             stimulus2: 'img/Diamond.png',
-            choices: ['t', 'd']
+            choices: ['a', 's']
         };
 
         var trial_p1_3 = {
             type: "2image-keyboard-response",
             stimulus1: 'img/Square.png', 
             stimulus2: 'img/Diamond.png',
-            choices: ['s', 'd']
+            choices: ['a', 's']
         };
 
         var trial_p1_4 = {
             type: "2image-keyboard-response",
             stimulus1: 'img/Diamond.png', 
             stimulus2: 'img/Circle.png',
-            choices: ['d', 'c']
+            choices: ['a', 's']
         };
 
         var trial_p1_5 = {
             type: "2image-keyboard-response",
             stimulus1: 'img/Triangle.png', 
             stimulus2: 'img/Square.png',
-            choices: ['t', 's']
+            choices: ['a', 's']
         };
 
         var trial_p1_6 = {
             type: "2image-keyboard-response",
             stimulus1: 'img/Circle.png', 
             stimulus2: 'img/Square.png',
-            choices: ['c', 's']
+            choices: ['a', 's']
         }
 
         var fixation = {
@@ -116,11 +115,11 @@
             "<div style='width: 700px;'>" +
             "<div style='float: left;'><img src='img/Shapes.png'></img>" +
             "</div>"+
-            "<p>If you choose <strong>circle</strong>, press the letter 'c' on the keyboard.</p><p>If " +
+            "<p>If you choose <strong>circle</strong>, press the letter 'a' on the keyboard.</p><p>If " +
             "you choose <strong>square</strong>, press the letter 's' on the keyboard.</p><p>If " +
             "you choose <strong>diamond</strong>, press the letter 'd' on the keyboard.</p><p>If " +
-            "you choose <strong>triangle</strong>, press the letter 't' on the keyboard.</p>",
-            choices: ['c', 't', 'd', 's']
+            "you choose <strong>triangle</strong>, press the letter 'f' on the keyboard.</p>",
+            choices: ['a', 's', 'd', 'f']
         }
 
         var question_block = {
@@ -138,10 +137,10 @@
             "trial.</p><p>Only <strong>1</strong> of the 4 shapes will lead to  " +
             "a positive outcome (a point being awarded).</p><p>Your goal is to " +
             "accumulate as many points as possible by the end of the trials.</p><p>If you " +
-            "choose <strong>circle</strong>, press the letter 'c' on the keyboard.</p><p>If " +
-            "you choose <strong>square</strong>, press the letter 's' on the keyboard.</p><p>If " +
-            "you choose <strong>diamond</strong>, press the letter 'd' on the keyboard.</p><p>If " +
-            "you choose <strong>triangle</strong>, press the letter 't' on the keyboard.</p>" +
+            "choose the shape on the <strong>far left</strong> of the screen, press <strong>'a'</strong> on the keyboard.</p><p>If " +
+            "you choose the shape in the <strong>middle left</strong> of the screen, press <strong>'s'</strong> on the keyboard.</p><p>If " +
+            "you choose the shape in the <strong>middle right</strong> of the screen, press <strong>'d'</strong> on the keyboard.</p><p>If " +
+            "you choose the shape on the <strong>far right</strong> of the screen, press  <strong>'f'</strong> on the keyboard.</p>" +
             "<p>Press any key to begin.</p>",
         };
 
@@ -151,7 +150,7 @@
             stimulus2: 'img/Triangle.png',
             stimulus3: 'img/Diamond.png',
             stimulus4: 'img/Square.png', 
-            choices: ['c', 't', 'd', 's'],
+            choices: ['a', 's', 'd', 'f'],
             repetitions: 5,
             randomize_order: true,
 
