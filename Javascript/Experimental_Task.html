@@ -86,6 +86,8 @@
 
         var point_accumulation1 = {
             type: "html-keyboard-response",
+            choices: jsPsych.NO_KEYS,
+            trial_duration: 1000,
             stimulus: function() {
                 var trials = jsPsych.data.get().filter({test_part: 'test'});
                 var correct_trials = trials.filter({correct: true});
