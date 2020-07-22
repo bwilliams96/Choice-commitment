@@ -163,7 +163,7 @@
             stimulus: function() {
 
                 var trials = jsPsych.data.get().filter({test_part: 'test'});
-                var correct_trials = trials.filter({correct: true});
+                var all_trials = trials.filter({correct: true});
                 var accuracy = Math.floor(Math.random()* 2);
                 
                 return "<p>"+accuracy+" point</p>";
@@ -176,9 +176,9 @@
             trial_duration: 1000,
             stimulus: function() {
 
-                var trials = jsPsych.data.get().filter({test_part: 'random'});
-                var correct_trials = trials.filter({correct: true});
-                var accuracy = Math.round(correct_trials.count());
+                var trials = jsPsych.data.get(accuracy).filter({test_part: 'test'});
+                var all_trials = trials.filter({correct: true});
+                var accuracy = Math.round(all_trials.count());
 
                 return "<p>"+accuracy+" total points</p>";
             },
@@ -189,8 +189,8 @@
             stimulus: function() {
 
                 var trials = jsPsych.data.get().filter({test_part: 'test'});
-                var correct_trials = trials.filter({correct: true});
-                var accuracy = Math.round(correct_trials.count() / trials.count() * 100);
+                var all_trials = trials.filter({correct: true});
+                var accuracy = Math.round(all_trials.count() / 6 * 100);
 
                 return "<p>You responded correctly on "+accuracy+"% of the trials.</p>"+
                 "<p>Press any key to continue.</p>";         
