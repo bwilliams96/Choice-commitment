@@ -98,7 +98,7 @@
                 size: 1,
             }
 
-            
+
         }
 
         var trial_p1_1 = {
@@ -167,7 +167,21 @@
                 var accuracy = Math.floor(Math.random()* 2);
                 
                 return "<p>"+accuracy+" point</p>";
-            }
+            },
+        }
+
+        var point_accumulation2 = {
+            type: "html-keyboard-response",
+            choices: jsPsych.NO_KEYS,
+            trial_duration: 1000,
+            stimulus: function() {
+
+                var trials = jsPsych.data.get().filter({test_part: 'random'});
+                var correct_trials = trials.filter({correct: true});
+                var accuracy = Math.round(correct_trials.count());
+
+                return "<p>"+accuracy+" total points</p>";
+            },
         }
 
         var debrief_block1 = {
@@ -240,21 +254,27 @@
         timeline.push(fixation);
         timeline.push(trial_p1_1);
         timeline.push(point_accumulation1);
+        timeline.push(point_accumulation2);
         timeline.push(fixation);
         timeline.push(trial_p1_2);
         timeline.push(point_accumulation1);
+        timeline.push(point_accumulation2);
         timeline.push(fixation);
         timeline.push(trial_p1_3);
         timeline.push(point_accumulation1);
+        timeline.push(point_accumulation2);
         timeline.push(fixation);
         timeline.push(trial_p1_4);
         timeline.push(point_accumulation1);
+        timeline.push(point_accumulation2);
         timeline.push(fixation);
         timeline.push(trial_p1_5);
         timeline.push(point_accumulation1);
+        timeline.push(point_accumulation2);
         timeline.push(fixation);
         timeline.push(trial_p1_6);
         timeline.push(point_accumulation1);
+        timeline.push(point_accumulation2);
         timeline.push(debrief_block1);
         timeline.push(choice_question);
         timeline.push(question_block);
