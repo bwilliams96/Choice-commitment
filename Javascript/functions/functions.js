@@ -73,12 +73,12 @@ function makeMatrix(l1, l2, prob, trueLength) {
 
     */
 
-   function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      let j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
     }
-  }
 
    var l1tL = Math.ceil(l1 / trueLength);
    var l2tL = Math.ceil(l2 / trueLength);
