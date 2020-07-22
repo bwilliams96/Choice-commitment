@@ -3,6 +3,7 @@ function main()
 %% Refresh Matlab
 
 sca;
+clear all;
 close all;
 clearvars;
 RandStream.setGlobalStream(RandStream('mt19937ar','seed',sum(100*clock)));
@@ -163,7 +164,7 @@ c1 = 0;
 c2 = -1;
 
 while c1 ~= c2
-    select = 'Choose prefered shape';
+    select = 'Choose preferred shape';
     DrawFormattedText(window, select, 'center',screenYpixels/5, [0 0 0]);   
     Screen('DrawTexture', window, stim{1}, [], stimpos{1}, 0);
     Screen('DrawTexture', window, stim{2}, [], stimpos{2}, 0);
