@@ -162,7 +162,7 @@
             trial_duration: 1000,
             stimulus: function() {
 
-                var trials = jsPsych.data.get().filter({test_part: 'test'});
+                var trials = jsPsych.data.get(accuracy).filter({accuracy});
                 var all_trials = trials.filter({correct: true});
                 var accuracy = Math.floor(Math.random()* 2);
                 
@@ -176,14 +176,14 @@
             trial_duration: 1000,
             stimulus: function() {
 
-                var trials = jsPsych.data.get(accuracy).filter({test_part: 'test'});
+                var trials = jsPsych.data.get(accuracy).filter({accuracy});
                 var all_trials = trials.filter({correct: true});
                 var accuracy = Math.round(all_trials.count());
 
                 return "<p>"+accuracy+" total points</p>";
             },
         }
-
+    
         var debrief_block1 = {
             type: "html-keyboard-response",
             stimulus: function() {
