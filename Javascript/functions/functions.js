@@ -12,6 +12,13 @@ function dynDisp(object) {
         depending on needs.
     */
 
+   function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
     object[0] = 0;
     object[1] = 0;
 
@@ -41,9 +48,13 @@ function dynDisp(object) {
        prob = [Math.pow((prob[0])-maximum,2), Math.pow((prob[1])-maximum,2), Math.pow((prob[2])-maximum,2), Math.pow((prob[3])-maximum,2)];
        
        //Find the two least displayed images (these will have the largest and second largest numbers)
-       object[0] = prob.indexOf(Math.max(...prob));
+       var least = prob.indexOf(Math.max(...prob));
        prob[prob.indexOf(Math.max(...prob))] = 0;
-       object[1] = prob.indexOf(Math.max(...prob));
+       var newleast prob.indexOf(Math.max(...prob));
+       var stim = least.concat(newleast);
+       shuffle(stim);
+       object[0] = stim[0];
+       object[1] = stim[1];
     }
 
     return object
