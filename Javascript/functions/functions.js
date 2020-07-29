@@ -119,7 +119,16 @@ function leastShow(object) {
        //Find the two least displayed images (these will have the largest and second largest numbers)
        var least = prop.indexOf(Math.max(...prop));
        prop[prop.indexOf(Math.max(...prop))] = 0;
-       var newleast = prop.indexOf(Math.max(...prop));
+       range = Math.max(...prob) - Math.min(...prob);
+
+       if (range == 0) {
+           var newleast = Math.floor(Math.random()*4);
+           while (least == newleast) {
+               newleast = Math.floor(Math.random()*4);
+            }
+        } else {
+            var newleast = prob.indexOf(Math.max(...prob));
+        }
        var stim = [least, newleast];
        shuffle(stim);
        object[0] = stim[0];
