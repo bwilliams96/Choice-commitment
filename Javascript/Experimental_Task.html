@@ -5,6 +5,7 @@
         <script src="jspsych-6.1.0/jspsych.js"></script>
         <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
         <script src="jspsych-6.1.0/plugins/jspsych-html-button-response.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-image-button-response.js"></script>
         <script src="jspsych-custom/custom-jspsych-four-image-keyboard-response.js"></script>
         <script src="jspsych-custom/custom-jspsych-two-image-keyboard-response.js"></script>
         <script src="functions/functions.js"></script>
@@ -82,7 +83,7 @@
             }
         }
 
-        choice_display_p1 = {
+        choice_display = {
             type: "2image-keyboard-response",
             stimulus1: function() {
                 return "img/shape" + preObject[0]  + ".png"
@@ -110,25 +111,54 @@
             }
         }
 
-        var outcome_display_p1 = {
+        var outcome_display = {
             type: "html-keyboard-response",
             stimulus: function() {
                 return feedback + " Points change"
             },
             choices: jsPsych.NO_KEYS,
             trial_duration: 1000,
+            data: {
+                trial_phase: "outcome_fb"
+            }
         }
 
-        var total_display_p1 = {
+        var total_display = {
             type: "html-keyboard-response",
             stimulus: function() {
                 return total + " Total points"
             },
             choices: jsPsych.NO_KEYS,
             trial_duration: 1000,
+            data: {
+                trial_phase: "total_fb"
+            }
         }
 
-        var trial_p1 = [stimuli_display_p1, choice_display_p1, outcome_display_p1, total_display_p1]
+        var preference_choice = {
+            type: "image-button-response",
+            stimulus: "img/Shapes.png",
+            choices: ["Circle", "Square", "Diamond", "Triangle"],
+            prompt: "Choose your preffered shape",
+            data: {
+                trial_phase: "preference"
+            }
+        }
+        
+        var confidence_choice = {
+            type: "html-button-response",
+            stimulus: "How confident do you feel about your preferred choice of shape on a scale " +
+            "of 1-10, with 1 being the least confident and 10 being the most confident?",
+            choices: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+            data: {
+                trial_phase: "confidence"
+            }
+        }
+
+        var trial_p1 = [stimuli_display_p1, choice_display, outcome_display, total_display]
+        var questions = {
+            timeline: [preference_choice, confidence_choice]
+        }
 
         var loop_p1 = {
             timeline: trial_p1,
@@ -142,7 +172,7 @@
         }
         
         jsPsych.init({
-            timeline: [welcome, instructions1, loop_p1],
+            timeline: [welcome, instructions1, loop_p1, questions],
             on_finish: function() {
                 jsPsych.data.displayData();
             }
@@ -189,52 +219,6 @@
                 "<p>Press any key to continue.</p>";         
             }
         }
-
-        var choice_question = {
-            type: "html-keyboard-response",
-            stimulus: "<p>Choose your preferred shape</p>" +
-            "<div style='width: 700px;'>" +
-            "<div style='float: left;'><img src='img/Shapes.png'></img>" +
-            "</div>"+
-            "<p>If you choose <strong>circle</strong>, press the letter 'a' on the keyboard.</p><p>If " +
-            "you choose <strong>square</strong>, press the letter 's' on the keyboard.</p><p>If " +
-            "you choose <strong>diamond</strong>, press the letter 'd' on the keyboard.</p><p>If " +
-            "you choose <strong>triangle</strong>, press the letter 'f' on the keyboard.</p>",
-            choices: ['a', 's', 'd', 'f']
-        }
-
-        var question_block = {
-            type: "html-button-response",
-            stimulus: "How confident do you feel about your preferred choice of shape on a scale " +
-            "of 1-10, with 1 being the least confident and 10 being the most confident?",
-            choices: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
-        }
-
-        var instructions2 = {
-            type: "html-keyboard-response",
-            stimulus: "<p>Phase 2</p><p>In this experiment, you will see 4 shapes (circle, square, " +
-            " diamond, triangle) appear on  the screen.</p><p>You must " +
-            "choose only <strong>1</strong> of the 4 shapes displayed on the screen during each " +
-            "trial.</p><p> You will earn points based on your choices.</p><p>Your goal is to " +
-            "accumulate as many points as possible by the end of the trials.</p><p>If you " +
-            "choose the shape on the <strong>far left</strong> of the screen, press <strong>'a'</strong> on the keyboard.</p><p>If " +
-            "you choose the shape in the <strong>middle left</strong> of the screen, press <strong>'s'</strong> on the keyboard.</p><p>If " +
-            "you choose the shape in the <strong>middle right</strong> of the screen, press <strong>'d'</strong> on the keyboard.</p><p>If " +
-            "you choose the shape on the <strong>far right</strong> of the screen, press  <strong>'f'</strong> on the keyboard.</p>" +
-            "<p>Press any key to begin.</p>",
-        };
-
-        var trial_p2_1 = {
-            type: "4image-keyboard-response",
-            stimulus1: 'img/Circle.png', 
-            stimulus2: 'img/Triangle.png',
-            stimulus3: 'img/Diamond.png',
-            stimulus4: 'img/Square.png', 
-            choices: ['a', 's', 'd', 'f'],
-            repetitions: 5,
-            randomize_order: true,
-
-        };
 
         var finish = {
             type: "html-keyboard-response",
