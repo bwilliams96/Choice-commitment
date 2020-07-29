@@ -46,12 +46,19 @@ function dynDisp(object) {
        var prob = [(object[2][0][1])/sum, (object[2][1][1])/sum, (object[2][2][1])/sum, (object[2][3][1])/sum];
        var maximum = Math.max(...prob);
        prob = [Math.pow((prob[0])-maximum,2), Math.pow((prob[1])-maximum,2), Math.pow((prob[2])-maximum,2), Math.pow((prob[3])-maximum,2)];
-       
        //Find the two least selected images (these will have the largest and second largest numbers)
        var least = prob.indexOf(Math.max(...prob));
        prob[prob.indexOf(Math.max(...prob))] = 0;
-       var newleast prob.indexOf(Math.max(...prob));
-       var stim = least.concat(newleast);
+       range = Math.max(...prob) - Math.min(...prob);
+       if (range == 0) {
+           var newleast = Math.floor(Math.random()*4);
+           while (least == newleast) {
+               newleast = Math.floor(Math.random()*4);
+           }
+       } else {
+           var newleast = prob.indexOf(Math.max(...prob));
+       }
+       var stim = [least, newleast];
        shuffle(stim);
        object[0] = stim[0];
        object[1] = stim[1];
@@ -112,8 +119,8 @@ function leastShow(object) {
        //Find the two least displayed images (these will have the largest and second largest numbers)
        var least = prop.indexOf(Math.max(...prop));
        prop[prop.indexOf(Math.max(...prop))] = 0;
-       var newleast prop.indexOf(Math.max(...prop));
-       var stim = least.concat(newleast);
+       var newleast = prop.indexOf(Math.max(...prop));
+       var stim = [least, newleast];
        shuffle(stim);
        object[0] = stim[0];
        object[1] = stim[1];

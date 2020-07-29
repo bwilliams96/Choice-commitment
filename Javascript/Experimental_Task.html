@@ -7,12 +7,22 @@
         <script src="jspsych-6.1.0/plugins/jspsych-html-button-response.js"></script>
         <script src="jspsych-custom/custom-jspsych-four-image-keyboard-response.js"></script>
         <script src="jspsych-custom/custom-jspsych-two-image-keyboard-response.js"></script>
-        <link href="jspsych.6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+        <script src="functions/functions.js"></script>
+        <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
     </head>
     <body></body>
     <script>
 
+        var trial_count = 0;
+        var n_trials = 10;
+        var feedback = [];
         var timeline = [];
+        var init = jsPsych.randomization.sampleWithoutReplacement([0, 1, 2, 3], 2);
+        var preObject = [];
+        preObject[0] = init[0];
+        preObject[1] = init[1];
+        preObject[2] = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+        var outcomes = makeMatrix(10, 10, [0.75, 0.5, 0.5, 0.25], 4);
 
         var welcome = {
             type: "html-button-response",
@@ -33,128 +43,98 @@
             "<p>Press any key to begin.</p>",
         };
 
-        var phase1_trial = {
+        var stimuli_display_p1 = {
             type: "2image-keyboard-response",
-            choices: ['a', 's'],
-            timeline: [
-                {
-                    type: 'html-keyboard-response',
-                    stimulus: '<div style="font-size:60px;">+</div',
-                    choices: jsPsych.NO_KEYS,
-                    trial_duration: 1000
+            stimulus1: function() {
+                return "img/shape" + preObject[0] + ".png"
+            },
+            stimulus2: function() {
+                return "img/shape" + preObject[1] + ".png"
+            },
+            choices: ['leftArrow', 'rightArrow'],
+            data: {
+                trial_phase: "choice",
+                stimulus1: function() {
+                    return "shape" + preObject[0]
                 },
-                {
-                    type: '2image-keyboard-response',
-                    stimulus: jsPsych.timelineVariable('stimulus'),
-                    choices: ['a', 's']
+                stimulus2: function () {
+                    return "shape" + preObject[1]
                 },
-                {
-                    type: "2image-keyboard-response",
-                    stimulus1: 'img/Circle.png', 
-                    stimulus2: 'img/Triangle.png',
-                    choices: ['a', 's'],
-                },
-                {
-                    type: "2image-keyboard-response",
-                    stimulus1: 'img/Triangle.png', 
-                    stimulus2: 'img/Diamond.png',
-                    choices: ['a', 's']
-                },
-                {
-                    type: "2image-keyboard-response",
-                    stimulus1: 'img/Square.png', 
-                    stimulus2: 'img/Diamond.png',
-                    choices: ['a', 's']
-                },
-                {
-                    type: "2image-keyboard-response",
-                    stimulus1: 'img/Diamond.png', 
-                    stimulus2: 'img/Circle.png',
-                    choices: ['a', 's']
-                },
-                {
-                    type: "2image-keyboard-response",
-                    stimulus1: 'img/Triangle.png', 
-                    stimulus2: 'img/Square.png',
-                    choices: ['a', 's']
-                },
-                {
-                    type: "2image-keyboard-response",
-                    stimulus1: 'img/Circle.png', 
-                    stimulus2: 'img/Square.png',
-                    choices: ['a', 's']
-                },
-            ],
-            timeline_variables: [
-                {stimulus: 'img/Circle.png'},
-                {stimulus: 'img/Triangle.png'},
-                {stimulus: 'img/Diamond.png'},
-                {stimulus: 'img/Square.png'}
-            ],
-            randomize_order: true,
-            sample: {
-                type: 'without-replacement',
-                size: 1,
+            },
+            on_finish: function(data) {
+                if (data.key_press == 39) {
+                    feedback = outcomes[0][preObject[1]][preObject[2][preObject[1]][1]]
+                    preObject[2][preObject[1]][1] = preObject[2][preObject[1]][1] + 1
+                    data.resp = "right"
+                    data.choice = "shape" + preObject[1]
+                } else if (data.key_press == 37) {
+                    feedback = outcomes[0][preObject[0]][preObject[2][preObject[0]][1]]
+                    preObject[2][preObject[0]][1] = preObject[2][preObject[0]][1] + 1
+                    data.resp = "left"
+                    data.choice = "shape" + preObject[0]
+                } else {
+                    data.resp = NULL
+                    data.choice = NULL
+                }
             }
-
-
         }
 
-        var trial_p1_1 = {
+        choice_display_p1 = {
             type: "2image-keyboard-response",
-            stimulus1: 'img/Circle.png', 
-            stimulus2: 'img/Triangle.png',
-            choices: ['a', 's'],
-            showchoice: true
-        };
-
-        var trial_p1_2 = {
-            type: "2image-keyboard-response",
-            stimulus1: 'img/Triangle.png', 
-            stimulus2: 'img/Diamond.png', 
-            choices: ['a', 's'],
-            showchoice: true
-        };
-
-        var trial_p1_3 = {
-            type: "2image-keyboard-response",
-            stimulus1: 'img/Square.png', 
-            stimulus2: 'img/Diamond.png',
-            choices: ['a', 's'],
-            showchoice: true
-        };
-
-        var trial_p1_4 = {
-            type: "2image-keyboard-response",
-            stimulus1: 'img/Diamond.png', 
-            stimulus2: 'img/Circle.png',
-            choices: ['a', 's'],
-            showchoice: true
-        };
-
-        var trial_p1_5 = {
-            type: "2image-keyboard-response",
-            stimulus1: 'img/Triangle.png', 
-            stimulus2: 'img/Square.png',
-            choices: ['a', 's'],
-            showchoice: true
-        };
-
-        var trial_p1_6 = {
-            type: "2image-keyboard-response",
-            stimulus1: 'img/Circle.png', 
-            stimulus2: 'img/Square.png',
-            choices: ['a', 's'],
-            showchoice: true
+            stimulus1: function() {
+                return "img/shape" + preObject[0]  + ".png"
+            },
+            stimulus2: function() {
+                return "img/shape" + preObject[1]  + ".png"
+            },
+            choices: [jsPsych.NO_KEYS],
+            showchoice: function() {
+                return jsPsych.data.get().last(1).values()[0].resp
+            },
+            trial_duration: 1000,
+            data: {
+                trial_phase: "resp_fb",
+                stimulus1: function() {
+                    return "shape" + preObject[0]
+                },
+                stimulus2: function () {
+                    return "shape" + preObject[1]
+                },
+            },
+            on_finish: function() {
+                trial_count++
+                preObject = dynDisp(preObject)
+            }
         }
 
-        var fixation = {
+        var outcome_display_p1 = {
             type: "html-keyboard-response",
-            stimulus: '<div style="font-size:60px;">+</div',
+            stimulus: feedback,
             choices: jsPsych.NO_KEYS,
             trial_duration: 1000,
         }
 
+        var trial_p1 = [stimuli_display_p1, choice_display_p1, outcome_display_p1]
+
+        var loop_p1 = {
+            timeline: trial_p1,
+            /*loop_function: function() {
+                if (trial_count == n_trials.length) { // check number of correct responses in last n responses and change cor_choice if criteria for reversal are met
+                    return false
+                } else {
+                    return true
+                }
+            } */
+        }
+        
+        jsPsych.init({
+            timeline: [welcome, instructions1, loop_p1],
+            on_finish: function() {
+                jsPsych.data.displayData();
+            }
+        });
+
+/*
         var point_accumulation1 = {
             type: "html-keyboard-response",
             choices: jsPsych.NO_KEYS,
@@ -246,45 +226,6 @@
             type: "html-keyboard-response",
             stimulus: 'Thank you for taking part in the experiment.'
         }
-
-        timeline.push(welcome);
-        timeline.push(instructions1);
-        timeline.push(fixation);
-        timeline.push(trial_p1_1);
-        timeline.push(point_accumulation1);
-        timeline.push(point_accumulation2);
-        timeline.push(fixation);
-        timeline.push(trial_p1_2);
-        timeline.push(point_accumulation1);
-        timeline.push(point_accumulation2);
-        timeline.push(fixation);
-        timeline.push(trial_p1_3);
-        timeline.push(point_accumulation1);
-        timeline.push(point_accumulation2);
-        timeline.push(fixation);
-        timeline.push(trial_p1_4);
-        timeline.push(point_accumulation1);
-        timeline.push(point_accumulation2);
-        timeline.push(fixation);
-        timeline.push(trial_p1_5);
-        timeline.push(point_accumulation1);
-        timeline.push(point_accumulation2);
-        timeline.push(fixation);
-        timeline.push(trial_p1_6);
-        timeline.push(point_accumulation1);
-        timeline.push(point_accumulation2);
-        timeline.push(debrief_block1);
-        timeline.push(choice_question);
-        timeline.push(question_block);
-        timeline.push(instructions2);
-        timeline.push(fixation);
-        timeline.push(trial_p2_1);
-        timeline.push(point_accumulation1);
-        timeline.push(finish);
-
-        jsPsych.init({
-            timeline: timeline
-        });
-        
+        */
     </script>
 </html>

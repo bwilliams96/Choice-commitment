@@ -75,10 +75,10 @@ jsPsych.plugins["2image-keyboard-response"] = (function() {
 
       var transparency = {stim1: 1, stim2: 1}
 
-      if (trial.showchoice == "c-left"){
+      if (trial.showchoice == "left"){
         transparency.stim2 = 0
       } // center left image chosen
-      if (trial.showchoice == "c-right"){
+      if (trial.showchoice == "right"){
         transparency.stim1 = 0
       } // center right image chosen
 
