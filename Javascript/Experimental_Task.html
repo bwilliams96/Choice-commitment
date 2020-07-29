@@ -16,6 +16,7 @@
         var trial_count = 0;
         var n_trials = 10;
         var feedback = [];
+        var total = 0;
         var timeline = [];
         var init = jsPsych.randomization.sampleWithoutReplacement([0, 1, 2, 3], 2);
         var preObject = [];
@@ -76,6 +77,8 @@
                     data.resp = NULL
                     data.choice = NULL
                 }
+
+                total = total + feedback
             }
         }
 
@@ -110,13 +113,22 @@
         var outcome_display_p1 = {
             type: "html-keyboard-response",
             stimulus: function() {
-                return feedback
+                return feedback + " Points change"
             },
             choices: jsPsych.NO_KEYS,
             trial_duration: 1000,
         }
 
-        var trial_p1 = [stimuli_display_p1, choice_display_p1, outcome_display_p1]
+        var total_display_p1 = {
+            type: "html-keyboard-response",
+            stimulus: function() {
+                return total + " Total points"
+            },
+            choices: jsPsych.NO_KEYS,
+            trial_duration: 1000,
+        }
+
+        var trial_p1 = [stimuli_display_p1, choice_display_p1, outcome_display_p1, total_display_p1]
 
         var loop_p1 = {
             timeline: trial_p1,
