@@ -14,7 +14,8 @@
     <body></body>
     <script>
 
-        var trial_count = 0;
+        var trial_count_pre = 0;
+        var trial_count_post = 0;
         var n_trials = 10;
         var feedback = [];
         var total = 0;
@@ -24,6 +25,11 @@
         preObject[0] = init[0];
         preObject[1] = init[1];
         preObject[2] = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+        init = jsPsych.randomization.sampleWithoutReplacement([0, 1, 2, 3], 2);
+        var postObject = [];
+        postObject[0] = init[0];
+        postObject[1] = init[1];
+        postObject[2] = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
         var outcomes = makeMatrix(10, 10, [0.75, 0.5, 0.5, 0.25], 4);
 
         var welcome = {
@@ -83,7 +89,45 @@
             }
         }
 
-        choice_display = {
+        var stimuli_display_p2 = {
+            type: "2image-keyboard-response",
+            stimulus1: function() {
+                return "img/shape" + postObject[0] + ".png"
+            },
+            stimulus2: function() {
+                return "img/shape" + postObject[1] + ".png"
+            },
+            choices: ['leftArrow', 'rightArrow'],
+            data: {
+                trial_phase: "choice",
+                stimulus1: function() {
+                    return "shape" + postObject[0]
+                },
+                stimulus2: function () {
+                    return "shape" + postObject[1]
+                },
+            },
+            on_finish: function(data) {
+                if (data.key_press == 39) {
+                    feedback = outcomes[0][postObject[1]][postObject[2][postObject[1]][1]]
+                    postObject[2][postObject[1]][1] = postObject[2][postObject[1]][1] + 1
+                    data.resp = "right"
+                    data.choice = "shape" + postObject[1]
+                } else if (data.key_press == 37) {
+                    feedback = outcomes[0][postObject[0]][postObject[2][postObject[0]][1]]
+                    postObject[2][postObject[0]][1] = postObject[2][postObject[0]][1] + 1
+                    data.resp = "left"
+                    data.choice = "shape" + postObject[0]
+                } else {
+                    data.resp = NULL
+                    data.choice = NULL
+                }
+
+                total = total + feedback
+            }
+        }
+
+        var choice_display_p1 = {
             type: "2image-keyboard-response",
             stimulus1: function() {
                 return "img/shape" + preObject[0]  + ".png"
@@ -106,8 +150,36 @@
                 },
             },
             on_finish: function() {
-                trial_count++
+                trial_count_pre ++
                 preObject = dynDisp(preObject)
+            }
+        }
+
+        var choice_display_p2 = {
+            type: "2image-keyboard-response",
+            stimulus1: function() {
+                return "img/shape" + postObject[0]  + ".png"
+            },
+            stimulus2: function() {
+                return "img/shape" + postObject[1]  + ".png"
+            },
+            choices: [jsPsych.NO_KEYS],
+            showchoice: function() {
+                return jsPsych.data.get().last(1).values()[0].resp
+            },
+            trial_duration: 1000,
+            data: {
+                trial_phase: "resp_fb",
+                stimulus1: function() {
+                    return "shape" + postObject[0]
+                },
+                stimulus2: function () {
+                    return "shape" + postObject[1]
+                },
+            },
+            on_finish: function() {
+                trial_count_post ++
+                postObject = leastShow(postObject)
             }
         }
 
@@ -155,15 +227,27 @@
             }
         }
 
-        var trial_p1 = [stimuli_display_p1, choice_display, outcome_display, total_display]
+        var trial_p1 = [stimuli_display_p1, choice_display_p1, outcome_display, total_display]
         var questions = {
             timeline: [preference_choice, confidence_choice]
         }
+        var trial_p2 = [stimuli_display_p2, choice_display_p2, outcome_display, total_display]
 
         var loop_p1 = {
             timeline: trial_p1,
             /*loop_function: function() {
-                if (trial_count == n_trials.length) { // check number of correct responses in last n responses and change cor_choice if criteria for reversal are met
+                if (trial_count_pre == n_trials) { // check number of correct responses in last n responses and change cor_choice if criteria for reversal are met
+                    return false
+                } else {
+                    return true
+                }
+            } */
+        }
+
+        var loop_p2 = {
+            timeline: trial_p2,
+            /*loop_function: function() {
+                if (trial_count_post == n_trials) { // check number of correct responses in last n responses and change cor_choice if criteria for reversal are met
                     return false
                 } else {
                     return true
@@ -172,7 +256,7 @@
         }
         
         jsPsych.init({
-            timeline: [welcome, instructions1, loop_p1, questions],
+            timeline: [welcome, instructions1, loop_p1, questions, loop_p2],
             on_finish: function() {
                 jsPsych.data.displayData();
             }
