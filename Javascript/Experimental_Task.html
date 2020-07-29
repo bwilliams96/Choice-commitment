@@ -109,7 +109,9 @@
 
         var outcome_display_p1 = {
             type: "html-keyboard-response",
-            stimulus: feedback,
+            stimulus: function() {
+                return feedback
+            },
             choices: jsPsych.NO_KEYS,
             trial_duration: 1000,
         }
