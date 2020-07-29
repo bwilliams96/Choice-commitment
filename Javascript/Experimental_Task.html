@@ -111,12 +111,12 @@
             },
             on_finish: function(data) {
                 if (data.key_press == 39) {
-                    feedback = outcomes[0][postObject[1]][postObject[2][postObject[1]][1]]
+                    feedback = outcomes[1][postObject[1]][postObject[2][postObject[1]][1]]
                     postObject[2][postObject[1]][1] = postObject[2][postObject[1]][1] + 1
                     data.resp = "right"
                     data.choice = "shape" + postObject[1]
                 } else if (data.key_press == 37) {
-                    feedback = outcomes[0][postObject[0]][postObject[2][postObject[0]][1]]
+                    feedback = outcomes[1][postObject[0]][postObject[2][postObject[0]][1]]
                     postObject[2][postObject[0]][1] = postObject[2][postObject[0]][1] + 1
                     data.resp = "left"
                     data.choice = "shape" + postObject[0]
